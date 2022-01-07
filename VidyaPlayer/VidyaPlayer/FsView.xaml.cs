@@ -21,6 +21,11 @@ namespace VidyaPlayer
         {
             InitializeComponent();
             
+            foreach (var item in VidyaPlayer.ToolbarItems.Items)
+            {
+                this.ToolbarItems.Add(item);
+            }
+            
             Update(path);
             Files.ItemTapped += (sender, args) =>
             {

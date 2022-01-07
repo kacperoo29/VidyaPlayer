@@ -19,6 +19,10 @@ namespace VidyaPlayer
                 fs.AwaitPermissions().Wait();
                 CurrentPath.Text = "Home";
                 this.InternalChildren.Add(new FsView(fs.GetHome()));
+                foreach (var item in VidyaPlayer.ToolbarItems.Items)
+                {
+                    this.ToolbarItems.Add(item);
+                }
             }
             catch (Exception e)
             {
