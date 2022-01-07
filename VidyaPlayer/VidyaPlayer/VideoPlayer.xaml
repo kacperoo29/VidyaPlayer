@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
+             xmlns:vp="clr-namespace:VidyaPlayer;assembly=VidyaPlayer"
+             x:Class="VidyaPlayer.VideoPlayer"
+             NavigationPage.HasNavigationBar="False"
+             Appearing="OnAppearing"
+             Disappearing="OnDisappearing">
+
+    <ContentPage.BindingContext>
+        <vp:VideoPlayerViewModel />
+    </ContentPage.BindingContext>
+    <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVlc}"
+                            EnableRendererDiscovery="True" />
+</ContentPage>
