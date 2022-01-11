@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using LibVLCSharp.Shared;
 using VidyaPlayer.Annotations;
+using Xamarin.Forms;
 
 namespace VidyaPlayer
 {
@@ -42,15 +43,17 @@ namespace VidyaPlayer
             MediaPlayer = new MediaPlayer(media) { EnableHardwareDecoding = true };
             media.Dispose();
             MediaPlayer.Play();
+            
+            DependencyService.Get<IStatusBar>().HideStatusBar();
         }
-
 
         internal void OnDisappearing()
         {
             MediaPlayer.Stop();
             LibVlc.Dispose();
+            
+            DependencyService.Get<IStatusBar>().ShowStatusBar();
         }
-
 
         private void Set<T>(string propertyName, ref T field, T value)
         {
@@ -60,6 +63,5 @@ namespace VidyaPlayer
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
     }
 }

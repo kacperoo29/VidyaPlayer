@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="VidyaPlayer.SubtitleList"
+             >
+    <NavigationPage.TitleView>
+        <Label Text="Search results" />
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout>
+            <ActivityIndicator x:Name="LoadingIndicator" IsEnabled="True" IsRunning="True"></ActivityIndicator>
+            <ListView x:Name="SubtitleListView" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

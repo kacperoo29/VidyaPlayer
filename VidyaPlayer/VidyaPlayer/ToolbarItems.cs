@@ -29,15 +29,14 @@ namespace VidyaPlayer
 
             Items[0].Clicked += async (sender, args) =>
             {
-                // TODO: Ask user for title or imdb id and check api for subtitles
-                var api = new SubtitlesApi(Configuration.Default);
-                var response = await api.SubtitlesAsync(query: "Breaking");
-                DependencyService.Get<IMessage>().ShortAlert(response.Data.Count.ToString()); 
+                var element = (Element) sender;
+                while (!(element.Parent is Page))
+                    element = element.Parent;
+
+                var senderPage = (Page) element.Parent;
+                string result = await senderPage.DisplayPromptAsync("Search subtitles", "Enter movie title");
                 
-                foreach (var item in response.Data)
-                {
-                    Log.Warning("VidyaPlayer", item.Attributes.Language);
-                }
+                await senderPage.Navigation.PushAsync(new SubtitleList(result));
             };
 
             Items[1].Clicked += (sender, args) =>

@@ -43,6 +43,13 @@ namespace VidyaPlayer
             };
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            
+            Update(_currentPath);
+        }
+
         private void Update(string newPath)
         {
             var fs = DependencyService.Get<IFilesystem>();

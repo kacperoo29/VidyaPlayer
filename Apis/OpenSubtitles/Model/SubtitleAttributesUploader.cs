@@ -70,7 +70,7 @@ namespace OpenSubtitles.Model
         /// Gets or Sets UploaderId
         /// </summary>
         [DataMember(Name="uploader_id", EmitDefaultValue=false)]
-        public decimal UploaderId { get; set; }
+        public decimal? UploaderId { get; set; }
 
         /// <summary>
         /// Gets or Sets Name

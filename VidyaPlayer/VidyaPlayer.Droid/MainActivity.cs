@@ -23,13 +23,19 @@ namespace VidyaPlayer.Droid
 
             Filesystem.MainActivity = this;
 
-            var requiredPermissions = new String[] { Manifest.Permission.ReadExternalStorage };
-            if (ActivityCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted) 
-                ActivityCompat.RequestPermissions(this, requiredPermissions, 0);
+            var requiredPermissions = new String[]
+                {Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage};
             
+            if (ActivityCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != Permission.Granted
+                && ActivityCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) !=
+                Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, requiredPermissions, 0);
+            }
+
             //TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
-            
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
