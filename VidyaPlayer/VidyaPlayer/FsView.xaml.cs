@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,18 +28,32 @@ namespace VidyaPlayer
             }
             
             Update(path);
-            Files.ItemTapped += (sender, args) =>
+            Files.ItemTapped += async (sender, args) =>
             {
                 var selectedIndex = args.ItemIndex;
                 if (_directories.Count > 0 && selectedIndex >= 0 && selectedIndex < _directories.Count)
                 {
-                    Navigation.PushAsync(new FsView(_directories[selectedIndex]));
+                    await Navigation.PushAsync(new FsView(_directories[selectedIndex]));
                 }
                 else
                 {
                     // TODO: Open file if supported, maybe even list only supported files
-                    var player = new VideoPlayer(_files[selectedIndex - _directories.Count()]);
-                    Navigation.PushAsync(player);
+                    var file = _files[selectedIndex - _directories.Count()];
+                    if (DependencyService.Get<IFiletype>().IsVideo(file))
+                    {
+                        var result = await DisplayActionSheet("Actions", "Cancel", null, "Open", "Open with subtitles");
+                        if (result == "Open")
+                        {
+                            var player = new VideoPlayer(file);
+                            await Navigation.PushAsync(player);
+                        }
+                        else
+                        {
+                            var subtitleFile = await FilePicker.PickAsync();
+                            var player = new VideoPlayer(file, subtitleFile.FullPath);
+                            await Navigation.PushAsync(player);
+                        }
+                    }
                 }
             };
         }
@@ -58,6 +73,7 @@ namespace VidyaPlayer
             
             _files = Directory.GetFiles(_currentPath).ToList();
             _directories = Directory.GetDirectories(_currentPath).ToList();
+            
             Files.ItemsSource = _directories.Concat(_files).Select(Path.GetFileName);
         }
     }

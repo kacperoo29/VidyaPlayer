@@ -32,15 +32,17 @@ namespace VidyaPlayer
             
         }
         
-        public void OnAppearing(string mediaSrc)
+        public void OnAppearing(string mediaSrc, string subtitleFile)
         {
             Core.Initialize();
 
             LibVlc = new LibVLC(enableDebugLogs: true);
-
             var media = new Media(LibVlc, new Uri(mediaSrc));
 
             MediaPlayer = new MediaPlayer(media) { EnableHardwareDecoding = true };
+            if (subtitleFile != null)
+                MediaPlayer.AddSlave(MediaSlaveType.Subtitle, new Uri(subtitleFile).ToString(), true);
+            
             media.Dispose();
             MediaPlayer.Play();
             

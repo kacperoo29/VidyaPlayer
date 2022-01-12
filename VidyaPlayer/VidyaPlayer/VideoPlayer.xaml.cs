@@ -14,18 +14,19 @@ namespace VidyaPlayer
     public partial class VideoPlayer : ContentPage
     {
         private string _mediaSrc;
+        private string _subtitleFile;
         
-        public VideoPlayer(string mediaSource)
+        public VideoPlayer(string mediaSource, string subtitleFile = null)
         {
             InitializeComponent();
-            //Media.Source = mediaSource;
             _mediaSrc = mediaSource;
+            _subtitleFile = subtitleFile;
         }
         
         void OnAppearing(object sender, System.EventArgs e)
         {
             base.OnAppearing();
-            ((VideoPlayerViewModel)BindingContext).OnAppearing(_mediaSrc);
+            ((VideoPlayerViewModel)BindingContext).OnAppearing(_mediaSrc, _subtitleFile);
         }
 
         void OnDisappearing(object sender, System.EventArgs e)
