@@ -20,10 +20,6 @@ namespace VidyaPlayer.Views
                 fs.AwaitPermissions().Wait();
                 CurrentPath.Text = "Home";
                 this.InternalChildren.Add(new FsView(fs.GetHome()));
-                foreach (var item in VidyaPlayer.ToolbarItems.Items)
-                {
-                    this.ToolbarItems.Add(item);
-                }
             }
             catch (Exception e)
             {
@@ -35,6 +31,12 @@ namespace VidyaPlayer.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            ToolbarItems.Clear();
+            foreach (var item in VidyaPlayer.ToolbarItems.Items)
+            {
+                this.ToolbarItems.Add(item);
+            }
+            
             if (App.CurrentUser == null)
             {
                 var db = await Database.Instance;

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenSubtitles.Api;
 using OpenSubtitles.Client;
 using VidyaPlayer.Models;
@@ -24,7 +25,7 @@ namespace VidyaPlayer
                 },
                 new ToolbarItem()
                 {
-                    Text = "Create user",
+                    Text = "Choose user",
                     Order = ToolbarItemOrder.Secondary
                 },
                 new ToolbarItem()
@@ -47,12 +48,23 @@ namespace VidyaPlayer
 
             Items[1].Clicked += async (sender, args) =>
             {
-                var db = await Database.Instance;
                 var senderPage = GetParentPage(sender);
+                
+                var db = await Database.Instance;
+                var users = await db.GetAllUsers();
+                var userNames = users.Select(x => x.Username).ToList();
+                userNames.Add("Create new");
+                string result = await senderPage.DisplayActionSheet("Select your account", null, null,
+                    userNames.ToArray());
 
-                string result = await senderPage.DisplayPromptAsync("New user", "Enter username");
+                if (result == "Create new")
+                {
+                    string newUsername = await senderPage.DisplayPromptAsync("New user", "Input new username");
+                    await db.InsertUser(new User() {Username = newUsername});
+                    result = newUsername;
+                }
 
-                await db.InsertUser(new User() {Username = result});
+                App.CurrentUser = await db.GetUserByUsername(result);
             };
 
             Items[2].Clicked += async (sender, args) =>
