@@ -17,7 +17,7 @@ namespace VidyaPlayer.Views
         {
             public string Name { get; set; }
             public string Count { get; set; }
-            
+
             public WatchCount(string name, int count)
             {
                 Name = name;
@@ -26,7 +26,7 @@ namespace VidyaPlayer.Views
         }
 
         private ObservableCollection<WatchCount> _counts;
-        
+
         public StatisticsView()
         {
             InitializeComponent();
@@ -39,6 +39,12 @@ namespace VidyaPlayer.Views
             base.OnAppearing();
 
             var db = await Database.Instance;
+            if (App.CurrentUser == null)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Choose user to use this feature");
+                return;
+            }
+
             var user = await db.GetUserWithChildren(App.CurrentUser);
 
             foreach (var movie in user.UserMovies)

@@ -53,16 +53,19 @@ namespace VidyaPlayer.Views
                             player = new VideoPlayer(file, subtitleFile.FullPath);
                         }
 
-                        var db = await Database.Instance;
-                        var shortFilename = Path.GetFileName(file);
-                        var movie = await db.GetMovieByFilename(shortFilename);
-                        if (movie == null)
+                        if (App.CurrentUser != null)
                         {
-                            await db.InsertMovie(new Movie() {Filename = shortFilename});
-                            movie = await db.GetMovieByFilename(shortFilename);
-                        }
+                            var db = await Database.Instance;
+                            var shortFilename = Path.GetFileName(file);
+                            var movie = await db.GetMovieByFilename(shortFilename);
+                            if (movie == null)
+                            {
+                                await db.InsertMovie(new Movie() {Filename = shortFilename});
+                                movie = await db.GetMovieByFilename(shortFilename);
+                            }
 
-                        await db.WatchMovie(App.CurrentUser, movie);
+                            await db.WatchMovie(App.CurrentUser, movie);
+                        }
 
                         await Navigation.PushAsync(player);
                     }
