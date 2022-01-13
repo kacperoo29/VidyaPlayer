@@ -6,7 +6,7 @@ using OpenSubtitles.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace VidyaPlayer
+namespace VidyaPlayer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubtitleList : ContentPage

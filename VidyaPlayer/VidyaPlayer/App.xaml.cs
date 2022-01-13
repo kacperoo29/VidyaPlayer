@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
 using OpenSubtitles.Client;
+using SQLite;
+using VidyaPlayer.Models;
+using VidyaPlayer.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +13,8 @@ namespace VidyaPlayer
 {
     public partial class App : Application
     {
+        public static User CurrentUser;
+        
         public App()
         {
             InitializeComponent();
@@ -18,9 +24,10 @@ namespace VidyaPlayer
             MainPage = new NavigationPage(new MainPage());
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
             // Handle when your app starts
+
         }
 
         protected override void OnSleep()

@@ -11,7 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
-namespace VidyaPlayer
+namespace VidyaPlayer.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SubtitleDetails : ContentPage

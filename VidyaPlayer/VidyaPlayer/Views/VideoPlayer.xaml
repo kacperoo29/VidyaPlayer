@@ -4,13 +4,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vlc="clr-namespace:LibVLCSharp.Forms.Shared;assembly=LibVLCSharp.Forms"
              xmlns:vp="clr-namespace:VidyaPlayer;assembly=VidyaPlayer"
-             x:Class="VidyaPlayer.VideoPlayer"
+             xmlns:viewModels="clr-namespace:VidyaPlayer.ViewModels;assembly=VidyaPlayer"
+             x:Class="VidyaPlayer.Views.VideoPlayer"
              NavigationPage.HasNavigationBar="False"
              Appearing="OnAppearing"
              Disappearing="OnDisappearing">
 
     <ContentPage.BindingContext>
-        <vp:VideoPlayerViewModel />
+        <viewModels:VideoPlayerViewModel />
     </ContentPage.BindingContext>
     <vlc:MediaPlayerElement MediaPlayer="{Binding MediaPlayer}" LibVLC="{Binding LibVlc}"
                             EnableRendererDiscovery="True" />

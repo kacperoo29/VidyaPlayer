@@ -5,7 +5,7 @@ using LibVLCSharp.Shared;
 using VidyaPlayer.Annotations;
 using Xamarin.Forms;
 
-namespace VidyaPlayer
+namespace VidyaPlayer.ViewModels
 {
     public class VideoPlayerViewModel : INotifyPropertyChanged
     {
